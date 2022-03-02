@@ -1,0 +1,9 @@
+{
+    "cmake.configureSettings": {
+        "ENABLE_TESTING": "ON",
+        "ENABLE_BENCHMARK": "ON"
+    },
+    "cmake.debugConfig": {
+        "args": ["16", "2000"]
+    }
+}
