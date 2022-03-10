@@ -341,7 +341,7 @@ void Simulator::run(const FloatType delta, const FloatType Re, unsigned maxSteps
         iterateP();
         ++step;
     }
-    std::cout << "Name" << '\t' << "Count" << '\t' << "Time(s)" << '\t' << "Byte" << '\t' << "Byte(GB/s)" << std::endl;
+    std::cout << "Name" << '\t' << "Count" << '\t' << "Time(s)" << '\t' << "Byte" << '\t' << "GB/s" << std::endl;
     for (auto const& res : result_table)
     {
         std::cout << res.first << '\t' << res.second[0] << '\t' << res.second[1]*std::pow(10,(-9)) << '\t' << res.second[2] << '\t' << ((res.second[2]*8)/(res.second[1]*std::pow(10,(-9))))*std::pow(10,-10)*1.25 << std::endl;
