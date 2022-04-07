@@ -20,4 +20,12 @@ BENCHMARK(BM_iterateP)->RangeMultiplier(2)->Range(from, to);
 BENCHMARK(BM_constructor)->RangeMultiplier(2)->Range(from, to);
 BENCHMARK(BM_run)->RangeMultiplier(2)->Range(from, to);
 
-BENCHMARK_MAIN();
+int main(int argc, char** argv) {
+    ::benchmark::Initialize(&argc, argv);
+    if (::benchmark::ReportUnrecognizedArguments(argc, argv)) {
+        return 1;
+    }
+    ::benchmark::RunSpecifiedBenchmarks();
+    ::benchmark::Shutdown();
+    return 0;
+}
