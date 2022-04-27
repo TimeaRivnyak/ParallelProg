@@ -5,7 +5,6 @@
 #include <fstream>
 #include <iostream>
 #include <limits>
-#include <mpi.h>
 
 void Simulator::setPrinting(bool toPrint) { printing = toPrint; }
 
@@ -60,7 +59,7 @@ void Simulator::applyBoundaryU() {
         un[(0) * (grid + 1) + j] = 0.0;
         un[(grid - 1) * (grid + 1) + j] = 0.0;
     }
-#pragma acc parallel loop independent
+
     for (SizeType i = 0; i <= (grid - 1); i++) {
         un[(i) * (grid + 1) + 0] = -un[(i) * (grid + 1) + 1];
         un[(i) * (grid + 1) + grid] = 2 - un[(i) * (grid + 1) + grid - 1];
@@ -69,7 +68,6 @@ void Simulator::applyBoundaryU() {
 
 void Simulator::solveVMomentum(const FloatType Re) {
 #pragma acc parallel loop independent collapse(2)
-#pragma omp parallel for collapse(2)
     for (SizeType i = 1; i <= (grid - 1); i++) {
         for (SizeType j = 1; j <= (grid - 2); j++) {
             vn[(i)*(grid + 1) + j] = v[(i)*(grid + 1) + j]
@@ -84,7 +82,6 @@ void Simulator::solveVMomentum(const FloatType Re) {
 }
 
 void Simulator::applyBoundaryV() {
-#pragma acc parallel loop independent
     for (SizeType j = 1; j <= (grid - 2); j++) {
         vn[(0) * (grid + 1) + j] = -vn[(1) * (grid + 1) + j];
         vn[(grid)*(grid + 1) + j] = -vn[(grid - 1) * (grid + 1) + j];
@@ -107,12 +104,11 @@ void Simulator::solveContinuityEquationP(const FloatType delta) {
 }
 
 void Simulator::applyBoundaryP() {
-#pragma acc parallel loop independent
     for (SizeType i = 1; i <= (grid - 1); i++) {
         pn[(i) * (grid + 1) + 0] = pn[(i) * (grid + 1) + 1];
         pn[(i) * (grid + 1) + grid] = pn[(i) * (grid + 1) + grid - 1];
     }
-#pragma acc parallel loop independent
+
     for (SizeType j = 0; j <= (grid); j++) {
         pn[(0) * (grid + 1) + j] = pn[(1) * (grid + 1) + j];
         pn[(grid) * (grid + 1) + j] = pn[(grid - 1) * (grid + 1) + j];
