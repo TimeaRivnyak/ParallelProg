@@ -19,7 +19,7 @@ tbuild:
 	cmake -S $(CURDIR) -B $(CURDIR)/debug -DCMAKE_BUILD_TYPE=Debug -DUSE_WARNINGS=ON -DENABLE_TESTING=ON -DCMAKE_CXX_COMPILER=nvc++
 	cmake --build $(CURDIR)/debug --parallel
 
-test: tbuild 
+test: tbuild
 	./debug/test/testacm
 
 bbuild:
