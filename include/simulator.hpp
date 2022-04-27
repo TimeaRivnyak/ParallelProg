@@ -1,7 +1,6 @@
 #pragma once
 #include <filesystem>
 #include <vector>
-#include <mpi.h>
 
 class Simulator {
     static inline bool printing = false;
